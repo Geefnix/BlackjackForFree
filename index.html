@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+
+  <meta charset='utf-8'>
+  <meta name='viewport' content='initial-scale=1.0,maximum-scale=1.0' />
+  <title>Blackjack for free! No pay, just play.</title>
+  <meta name='description' content='Play Blackjack for free unlimited times. No cash or creditcard required. It"s really free. Enjoy!'/>
+
+  <link rel='stylesheet' href='./css/BJ.css'>
+  <link rel='stylesheet' href='./css/Effects.css'>
+
+</head>
+
+<body>
+  <div class='blackjackModule' id='viewport'>
+
+    <div id='top-circle'>
+
+      <div class='top-row'>
+        <div class='image-container' id='info-icon'>
+          <img src='./icons/CIRCLEORANGE.png'></img>
+          <button class='image-context'><img class='image-context' src='./icons/INFO.png'></img></button>
+        </div>
+
+        <div class='image-container'>
+          <img src='./icons/BARGREEN.png'></img>
+          <div class='image-context'><h1 id='blackjack'>Blackjack<h1></div>
+        </div>
+
+        <div class='image-container' id='volume-icon'>
+          <img src='./icons/CIRCLEORANGE.png'></img>
+          <button class='image-context'><img class='image-context' src='./icons/VOLUME.png'></img></button>
+        </div>
+      </div>
+
+
+      <div class='balance-row image-container'>
+        <img src='./icons/ETCBAR.png'></img>
+        <div class='image-context' id='gold-coin'><img type='button' src='./icons/COIN.png'></img></div>
+        <div class='image-context'><b id='balance'></b></div>
+      </div>
+
+
+      <div class='dealer-row' id='dealerContainer'>
+
+      </div>
+
+    </div>
+
+
+    <div class='middle-row'>
+
+      <div class='image-container' id='newGame-icon'>
+        <img src='./icons/CIRCLERED.png'></img>
+        <button class='image-context' id='newGame' disabled><h2 class='image-context'>NEW GAME</h2></button>
+      </div>
+
+      <div class='image-container' id='eventLog-icon'>
+        <img src='./icons/BARBLUE.png'></img>
+        <div class='image-context' id='eventLog'>Welcome</div>
+      </div>
+
+      <div class='image-container' id='deal-icon'>
+        <img src='./icons/CIRCLERED.png'></img>
+        <button class='image-context' id='deal' disabled><h2 class='image-context'>DEAL</h2></button>
+      </div>
+
+    </div>
+
+
+    <div id='bottom-circle'>
+
+      <div id='usersContainer'>
+
+      </div>
+
+      <div>
+        <div class='coin-row image-container'>
+          <img src='./icons/BARORANGE.png'></img>
+          <div class='image-context' id='coin-bar'>
+
+            <div class='coins image-container'>
+              <img src='./icons/CHIP25.png'></img>
+              <button class='image-context' id='twentyFive' disabled><b class='image-context'>25</b></button>
+            </div>
+
+            <div class='coins image-container'>
+              <img src='./icons/CHIP50.png'></img>
+              <button class='image-context' id='fifty' disabled><b class='image-context'>50</b></button>
+            </div>
+
+            <div class='coins image-container'>
+              <img src='./icons/CHIP100.png'></img>
+              <button class='image-context' id='hundred' disabled><b class='image-context'>100</b></button>
+            </div>
+
+            <div class='coins image-container'>
+              <img src='./icons/CHIP200.png'></img>
+              <button class='image-context' id='twoHundred' disabled><b class='image-context'>200</b></button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class='special-row'>
+        <div class='special-bar image-container' id='split-bar'>
+          <img src='./icons/CIRCLEGREEN.png'></img>
+          <div class='special-icon image-context'>
+
+            <div class='image-container magictime tinLeftIn' id='splitElement'>
+              <img src='./icons/CIRCLERED.png'></img>
+              <button class='image-context' id='split' disabled><h2 class='image-context'>SPLIT</h2></button>
+            </div>
+
+          </div>
+        </div>
+
+        <div class='special-bar image-container' id='double-bar'>
+          <img src='./icons/CIRCLEGREEN.png'></img>
+          <div class='special-icon image-context' >
+
+            <div class='image-container magictime tinRightIn' id='doubleElement'>
+              <img src='./icons/CIRCLERED.png'></img>
+              <button class='image-context' id='double' disabled><h2 class='image-context'>DOUBLE</h2></button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div>
+        <div class='action-bar image-container'>
+          <img src='./icons/CIRCLEGREEN.png'></img>
+          <div class='action-icon image-context'>
+
+            <div class='image-container'>
+              <img src='./icons/CIRCLERED.png'></img>
+              <button class='image-context' id='stand' disabled><h2 class='image-context'>STAND</h2></button>
+            </div>
+
+          </div>
+        </div>
+
+        <div class='action-bar image-container'>
+          <img src='./icons/CIRCLEGREEN.png'></img>
+          <div class='action-icon image-context'>
+
+            <div class='image-container'>
+              <img src='./icons/CIRCLERED.png'></img>
+              <button class='image-context' id='takeCard' disabled><h2 class='image-context'>HIT</h2></button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src='./scripts.min.js'></script>
+
+</body>
+</html>

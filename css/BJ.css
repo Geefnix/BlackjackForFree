@@ -1,0 +1,245 @@
+
+body {
+  margin: 0px 0px 0px 0px;
+  background-color: darkgreen;
+  white-space: nowrap;
+}
+
+button {
+  border: none;
+  background: none;
+  outline: none;
+  height: 70%;
+  width: 70%;
+}
+
+h2 {
+  margin: auto;
+  position: auto;
+}
+
+b {
+  margin: auto;
+  position: auto;
+}
+
+.blackjackModule {
+  text-align: center;
+  background-color: #ffecb3;
+}
+
+.image-container {
+  width: auto;
+  height: auto;
+  margin: auto;
+  text-align: center;
+  position: relative;
+
+  display:inline-block;
+  }
+
+.image-context {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform:translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.result-text {
+  margin: 0px 0px 0px 0px;
+  color: orange;
+  font-size: 40px;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+
+  -ms-transform: rotate(339deg) scale(1) skew(0deg) translate(-50px);
+  -o-transform: rotate(339deg) scale(1) skew(0deg) translate(-50px);
+  -moz-transform: rotate(339deg) scale(1) skew(0deg) translate(-50px);
+  -webkit-transform: rotate(339deg) scale(1) skew(0deg) translate(-50px);
+  transform: rotate(339deg) scale(1) skew(0deg) translate(-50px);
+}
+
+.activePlayer {
+  text-shadow: -1px 0 orange, 0 1px orange, 1px 0 orange, 0 -1px orange;
+}
+
+#top-circle {
+  border-bottom-left-radius: 10000px;
+  border-bottom-right-radius: 10000px;
+  background-color: darkgreen;
+
+  height: 260px;
+  width: auto;
+  margin-bottom: -15px;
+}
+
+#bottom-circle {
+  border-top-left-radius: 5000px;
+  border-top-right-radius: 5000px;
+  background-color: darkgreen;
+
+  height: 360px;
+  width: auto;
+  margin-top: -15px;
+}
+
+.top-row {
+  padding-top: 20px;
+  zoom: 50%;
+}
+
+#info-icon {
+  zoom: 60%;
+  margin-right: 80px;
+}
+
+#blackjack {
+  color: white;
+  text-shadow: 3px 3px 0px #2c2e38, 5px 5px 0px #5c5f72;
+  font-size: 70px;
+}
+
+#volume-icon {
+  zoom: 60%;
+  margin-left: 80px;
+}
+
+.balance-row {
+  margin-top: 10px;
+  zoom: 40%;
+}
+
+#gold-coin {
+  position: absolute;
+  zoom: 55%;
+  left: 100px;
+}
+
+#balance {
+  text-shadow: none;
+  font-size: 40px;
+  color: black;
+}
+
+.dealer-row {
+  margin-top: 10px;
+}
+
+#dealerContainer {
+  text-shadow: -0.5px 0 white, 0 0.5px white, 0.5px 0 white, 0 -0.5px white;
+}
+
+.middle-row {
+  zoom: 50%;
+}
+
+#newGame-icon {
+  zoom: 170%;
+}
+
+#eventLog-icon{
+  bottom: 35px;
+}
+
+#eventLog {
+  color: white;
+  text-shadow: 3px 3px 0px #2c2e38, 5px 5px 0px #5c5f72;
+  font-size: 70px;
+}
+
+#deal-icon {
+  zoom: 170%;
+}
+
+#usersContainer {
+  height: 160px;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+
+.scoreDiv {
+  height: 20px;
+}
+
+.cardsDiv {
+  height: 70px;
+}
+
+.betDiv {
+  height: 50px;
+  top: 40px;
+}
+
+.user-icon {
+  zoom: 35%;
+}
+
+.bet-icon {
+  zoom: 30%;
+}
+
+.users {
+  display: inline-block;
+  width: 120px;
+  margin: 10px;
+}
+
+.card-icon {
+  height: 80px;
+}
+
+.coin-row {
+  zoom: 50%;
+}
+
+#coin-bar {
+  width: 400px;
+}
+
+.coins {
+  zoom: 120%;
+}
+
+.special-row {
+  margin-top: -60px;
+  margin-bottom: -50px;
+}
+
+.special-bar {
+  display: inline-block;
+  zoom: 80%;
+}
+
+.special-icon {
+  zoom: 60%;
+  width: 300px;
+}
+
+#split-bar {
+  margin-right: 125px;
+}
+
+#splitElement {
+  display: none;
+}
+
+#double-bar {
+  margin-left: 125px;
+}
+
+#doubleElement {
+  display: none;
+}
+
+.action-bar {
+  display: inline-block;
+  zoom: 80%;
+}
+
+.action-icon {
+  zoom: 60%;
+  width: 300px;
+}
