@@ -182,12 +182,12 @@ var game = ( function() {
       setTimeout( function() {
         render.eventLog('Try again');
         balance.set( 1000 );
+        buttons.toggleNewGame();
       }, 2000);
     } else {
         render.eventLog('Next game');
+        buttons.toggleNewGame();
       }
-
-    buttons.toggleNewGame();
   }
 
   function gameMechanics() {
@@ -268,6 +268,7 @@ var game = ( function() {
     deck.shuffle();
     buttons.toggleNewGame();
     activePlayer = players[ 0 ];
+    render.activePlayer( activePlayer );
     render.eventLog('Place bet');
     buttons.toggleBet( balance.total );
   }
