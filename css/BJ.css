@@ -74,7 +74,7 @@ b {
 
   height: 250px;
   width: auto;
-  margin-bottom: -15px;
+  margin-bottom: -30px;
 }
 
 #bottom-circle {
@@ -210,11 +210,11 @@ b {
 
 .special-bar {
   display: inline-block;
-  zoom: 80%;
+  zoom: 75%;
 }
 
 .special-icon {
-  zoom: 60%;
+  zoom: 70%;
   width: 300px;
 }
 
@@ -236,10 +236,10 @@ b {
 
 .action-bar {
   display: inline-block;
-  zoom: 80%;
+  zoom: 75%;
 }
 
 .action-icon {
-  zoom: 60%;
+  zoom: 70%;
   width: 300px;
 }

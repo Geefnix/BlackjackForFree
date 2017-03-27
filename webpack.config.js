@@ -1,14 +1,14 @@
-var webpack = require('webpack'); 
+var webpack = require('webpack');
 
 module.exports = {
-  context: __dirname, 
-  entry: './scripts.js', 
+  context: __dirname,
+  entry: './scripts.js',
   output: {
     path: __dirname + '',
-    filename: 'scripts.min.js' 
+    filename: 'scripts.min.js'
   },
 
-  module: { 
+  module: {
     rules: [
       {
         test: /.js$/,
@@ -18,7 +18,7 @@ module.exports = {
           presets: ['es2015']
         }
       }
-    ]   
+    ]
   },
 
   plugins: []
@@ -28,7 +28,7 @@ module.exports = {
 if(process.env.NODE_ENV === 'production') {
 
   module.exports.plugings.push(
-      
+
       new webpack.optimize.UglifyJsPlugin()
 
     );
