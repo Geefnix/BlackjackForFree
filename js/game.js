@@ -42,7 +42,7 @@ var game = ( function() {
     var i = 0;
 
     for( ; i < numberOfUsers ; i++ ) {
-      if ( players[ i ].status !== 'Bust' || players[ i ].status !== 'Blackjack!' || players[ i ].inplay !== true ) {
+      if ( players[ i ].status !== 'Bust' && players[ i ].status !== 'Blackjack!' && players[ i ].inplay !== false ) {
         return false;
       }
     }
@@ -115,7 +115,7 @@ var game = ( function() {
   function dealersTurn() {
     activePlayer.hideCardDealer( false, activePlayer )
 
-    if( !allUsersBustOrBlackjackorNotInplay() ) {
+    if( allUsersBustOrBlackjackorNotInplay() ) {
       determineResults();
     } else {
         _dealerTakeCards( determineResults );
@@ -307,6 +307,7 @@ var game = ( function() {
     players.splice( i, 0, new User( users, 'Split', oldPlayer ) );
     newPlayer = players[ i ];
     users++;
+    newPlayer.inplay = true;
     newPlayer.setBet( oldPlayer.bet, newPlayer );
     balance.reduce( newPlayer.bet );
     newPlayer.addCard( transferCard, newPlayer );
