@@ -28,6 +28,18 @@ b {
   background-color: #ffecb3;
 }
 
+#rules {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: orange;
+  text-align: center;
+  font-family: rockwell;
+  font-size: 20px;
+}
+
 .image-container {
   width: auto;
   height: auto;
@@ -72,7 +84,7 @@ b {
   border-bottom-right-radius: 10000px;
   background-color: darkgreen;
 
-  height: 250px;
+  height: 260px;
   width: auto;
   margin-bottom: -30px;
 }

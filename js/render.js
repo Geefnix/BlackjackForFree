@@ -112,6 +112,34 @@ var render = ( function() {
     $resultContainer.appendTo( $scoreContainer );
   }
 
+  function rules() {
+    var $rulesHTML = $(`<button onclick='this.remove()' id='rules'>
+    BLACKJACK RULES<br>
+    <br>
+    - Press NEW GAME to start<br>
+    <br>
+    - The object of the game is to reach 21 points<br>
+      or achieve a score higher than the dealer<br>
+      without exceeding 21<br>
+    <br>
+    - First, place a bet and press DEAL<br>
+    <br>
+    - Then HIT to add a card, or STAND if you are<br>
+      happy with your cards<br>
+    <br>
+    - If your card total goes over 21 you are BUST<br>
+      and the dealer wins<br>
+    <br>
+    - You can SPLIT your cards if dealt two cards<br>
+      of the same value<br>
+    <br>
+    - Double your bet if you are dealt a total score<br>
+      of 9, 10 or 11. You will receive only one further<br>
+      card<br>
+        </button>`);
+    $rulesHTML.appendTo( $el );
+  }
+
   function score( activePlayer ) {
     var $scoreContainer = $el.find( activePlayer.scoreContainer );
     $scoreContainer.text( activePlayer.netScore );
@@ -135,6 +163,7 @@ var render = ( function() {
     removeUserHTML: removeUserHTML,
     resetPlayer: resetPlayer,
     result: result,
+    rules: rules,
     score: score,
     splitButton: splitButton,
   }
