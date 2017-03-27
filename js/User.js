@@ -26,7 +26,7 @@ class User extends Player{
   }
 
   checkSplit( users, maxUsers ) {
-    if( this.cards[ 0 ].number === this.cards[ 1 ].number && users < maxUsers) {
+    if( this.cards[ 0 ].value === this.cards[ 1 ].value && users < maxUsers) {
       buttons.toggleSplit();
     }
   }
@@ -77,7 +77,7 @@ class User extends Player{
   setBet( bet, activePlayer ) {
     this.bet = bet;
     render.bet( bet, activePlayer );
-  }  
+  }
 }
 
 module.exports = User;
