@@ -15,6 +15,7 @@ var game = ( function() {
   var maxUsers = 0;
   //cache DOM
   var $el = $('.blackjackModule');
+  var $info = $el.find('#info');
   var $newGame = $el.find('#newGame');
   var $deal = $el.find('#deal');
   var $twentyFive = $el.find('#twentyFive');
@@ -26,6 +27,7 @@ var game = ( function() {
   var $stand = $el.find('#stand');
   var $takeCard = $el.find('#takeCard');
   //Bind events
+  $info.click( info );
   $newGame.click( newGame );
   $twentyFive.click( function() { betPlaced( 25 ); });
   $fifty.click( function() { betPlaced( 50 ); });
@@ -216,6 +218,10 @@ var game = ( function() {
           gameMechanics();
         }
     }
+  }
+
+  function info() {
+    render.rules();
   }
 
   function selectNextPlayer( activePlayer ) {
