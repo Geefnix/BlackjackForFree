@@ -37,11 +37,19 @@ var render = ( function() {
   }
 
   function createUser( index, split, oldPlayer ) {
+    //Check what user symbole to use
+    var symbol = 0;
+    if( index % 2 !== 0 ) {
+      symbol = './icons/User2.png';
+    } else {
+        symbol = './icons/User.png';
+      }
+
     var userHTML = `<div class='users' id='user${ index }'>
                       <h2 class='scoreDiv scoreContainer image-container' id='scoreUser${ index }'></h2>
                       <div class='cardsDiv' id='cardsUser${ index }'></div>
                       <div class='image-container'>
-                        <img class='user-icon image-context' src='./icons/User.png'></img>
+                        <img class='user-icon image-context' src=${ symbol }></img>
                         <div class='betDiv image-context' id='betUser${ index }'></div>
                       </div>
                     </div>`;
