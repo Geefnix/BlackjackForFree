@@ -26,6 +26,10 @@ class Player {
       this.status = 'Bust';
     }
 
+    if( this.netScore === 21 ) {
+      this.status = 'Stand';
+    }
+
     if( this.cards.length === 2 && this.netScore === 21 ) {
       this.status = 'Blackjack!';
     }

@@ -11,6 +11,7 @@ button {
   outline: none;
   height: 70%;
   width: 70%;
+  font-family: none;
 }
 
 h2 {
@@ -115,7 +116,7 @@ b {
   font-size: 70px;
 }
 
-#volume-icon {
+#sound-icon {
   zoom: 60%;
   margin-left: 80px;
 }
@@ -149,7 +150,7 @@ b {
   zoom: 50%;
 }
 
-#newGame-icon {
+#level-icons {
   zoom: 170%;
 }
 
@@ -160,11 +161,7 @@ b {
 #eventLog {
   color: white;
   text-shadow: 3px 3px 0px #2c2e38, 5px 5px 0px #5c5f72;
-  font-size: 70px;
-}
-
-#deal-icon {
-  zoom: 170%;
+  font-size: 60px;
 }
 
 #usersContainer {
