@@ -197,14 +197,14 @@ var game = ( function() {
   function endGame() {
     if( balance.insufficientFunds() ) {
       sounds.gameOver();
-      render.eventLog('Game over');
+      render.eventLog('Game Over');
       setTimeout( function() {
-        render.eventLog('Try again');
+        render.eventLog('Try Again');
         balance.set( 1000 );
         buttons.toggleGame();
       }, 2000);
     } else {
-        render.eventLog('Next game');
+        render.eventLog('Next Game');
         buttons.toggleGame();
       }
   }
