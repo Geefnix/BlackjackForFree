@@ -3,12 +3,11 @@ var render = require('./render.js');
 
 var buttons = ( function() {
   var $el = $('.blackjackModule');
-  var $deal = $el.find('#deal');
   var $twentyFive = $el.find('#twentyFive');
   var $fifty = $el.find('#fifty');
   var $hundred = $el.find('#hundred');
   var $twoHundred = $el.find('#twoHundred');
-  var $newGame = $el.find('#newGame');
+  var $game = $el.find('#game');
   var $split = $el.find('#split');
   var $double = $el.find('#double');
   var $stand = $el.find('#stand');
@@ -58,8 +57,12 @@ var buttons = ( function() {
     render.doubleButton();
   }
 
-  function toggleNewGame() {
-    $newGame.prop('disabled', function( i, v ) { return !v; });
+  function toggleGame( status ) {
+    if( status ) {
+      $game.prop('disabled', false);
+    } else {
+        $game.prop('disabled', function( i, v ) { return !v; });
+      }
   }
 
   function toggleSplit() {
@@ -75,12 +78,12 @@ var buttons = ( function() {
   return {
     toggleAllOff: toggleAllOff,
     toggleBet: toggleBet,
-    toggleDeal: toggleDeal,
     toggleDouble: toggleDouble,
-    toggleNewGame: toggleNewGame,
+    toggleGame: toggleGame,
     toggleSplit: toggleSplit,
     toggleStandAndHit: toggleStandAndHit,
   }
+
 })();
 
 module.exports = buttons;

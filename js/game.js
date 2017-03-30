@@ -5,19 +5,21 @@ var Dealer = require('./Dealer.js');
 var Deck = require('./Deck.js');
 var User = require('./User.js');
 var render = require('./render.js');
+var sounds = require('./sounds.js');
 
 var game = ( function() {
   var activePlayer = {};
   var balance = {};
   var deck = {};
+  var gameButtonStatusNewGame = true;
   var players = [];
   var users = 0;
   var maxUsers = 0;
   //cache DOM
   var $el = $('.blackjackModule');
   var $info = $el.find('#info');
-  var $newGame = $el.find('#newGame');
-  var $deal = $el.find('#deal');
+  var $volume = $el.find('#volume');
+  var $game = $el.find('#game');
   var $twentyFive = $el.find('#twentyFive');
   var $fifty = $el.find('#fifty');
   var $hundred = $el.find('#hundred');
@@ -28,7 +30,8 @@ var game = ( function() {
   var $takeCard = $el.find('#takeCard');
   //Bind events
   $info.click( info );
-  $newGame.click( newGame );
+  $volume.click( volume );
+  $game.click( gameButtonSwitch );
   $twentyFive.click( function() { betPlaced( 25 ); });
   $fifty.click( function() { betPlaced( 50 ); });
   $hundred.click( function() { betPlaced( 100 ); });
@@ -37,7 +40,6 @@ var game = ( function() {
   $stand.click( userStand );
   $split.click( userSplit );
   $double.click( userDouble );
-  $deal.click( deal );
 
   function allUsersBustOrBlackjackorNotInplay() {
     var numberOfUsers = players.length - 1;
@@ -52,14 +54,17 @@ var game = ( function() {
   }
 
   function betPlaced( bet ) {
+    sounds.chips();
     activePlayer.setBet( bet, activePlayer );
-    // Make sure deal button does not get toggled when bets are changed
-    buttons.toggleDeal( true );
+    // Make sure game button triggers function deal and does not get toggled off when bets are changed
+    gameButtonStatusNewGame = false;
+    buttons.toggleGame( true );
+    render.eventLog('Deal');
   }
 
   function createPlayers() {
     if( users > maxUsers ) {
-      buttons.toggleNewGame();
+      buttons.toggleGame();
       alert('You\'re a funny guy');
       return;
     }
@@ -72,6 +77,7 @@ var game = ( function() {
   }
 
   function deal() {
+    sounds.buttonPress();
     var indexUser = players.indexOf( activePlayer ) + 1;
 
     balance.reduce( activePlayer.bet );
@@ -79,10 +85,11 @@ var game = ( function() {
 
     if( indexUser < users && !balance.insufficientFunds() ) {
       activePlayer = selectNextPlayer( activePlayer );
-      buttons.toggleDeal();
+      buttons.toggleGame();
       buttons.toggleBet( balance.total );
       } else {
-          buttons.toggleDeal();
+          gameButtonStatusNewGame = true;
+          buttons.toggleGame();
           buttons.toggleBet();
           activePlayer = players[ 0 ];
           startDealing();
@@ -93,6 +100,7 @@ var game = ( function() {
 
     function _dealCard() {
       setTimeout( function() {
+        sounds.drawCard();
         activePlayer.addCard( deck.grabCard(), activePlayer );
 
         if( activePlayer.id === 'Dealer' && activePlayer.cards.length === 2 ) {
@@ -105,7 +113,7 @@ var game = ( function() {
         } else {
             activePlayer = players[ 0 ];
             render.activePlayer( activePlayer );
-            render.eventLog('Play');
+            render.eventLog('Select Action');
             gameMechanics();
           }
       }, 400);
@@ -126,6 +134,7 @@ var game = ( function() {
     function _dealerTakeCards( callback ) {
       setTimeout(function () {
         if( activePlayer.netScore < 17 ) {
+          sounds.drawCard();
           activePlayer.addCard( deck.grabCard(), activePlayer );
           _dealerTakeCards( callback );
         } else {
@@ -148,18 +157,25 @@ var game = ( function() {
         user = players[ i ];
 
         if( user.status === 'Blackjack!' && dealer.status === 'Blackjack!' ) {
+          sounds.draw();
           user.result = [ 'Draw', 1 ];
         } else if( user.status === 'Blackjack!' && dealer.status !== 'Blackjack!' ) {
+            sounds.win();
             user.result = [ 'Win!', 2.5 ];
           } else if( user.status !== 'Blackjack!' && dealer.status === 'Blackjack!' ) {
+              sounds.lose();
               user.result = [ 'Lose', 0 ];
             } else if( user.status === 'Bust' ) {
+                sounds.lose();
                 user.result = [ 'Lose', 0 ];
               } else if( dealer.netScore > 21 || user.netScore > dealer.netScore ) {
+                  sounds.win();
                   user.result = [ 'Win!', 2 ];
                 } else if( user.netScore === dealer.netScore ) {
+                    sounds.draw();
                     user.result = [ 'Draw', 1 ];
                   } else if ( dealer.netScore > user.netScore ) {
+                      sounds.lose();
                       user.result = [ 'Lose', 0 ];
                     }
 
@@ -180,15 +196,24 @@ var game = ( function() {
 
   function endGame() {
     if( balance.insufficientFunds() ) {
+      sounds.gameOver();
       render.eventLog('Game over');
       setTimeout( function() {
         render.eventLog('Try again');
         balance.set( 1000 );
-        buttons.toggleNewGame();
+        buttons.toggleGame();
       }, 2000);
     } else {
         render.eventLog('Next game');
-        buttons.toggleNewGame();
+        buttons.toggleGame();
+      }
+  }
+
+  function gameButtonSwitch() {
+    if( gameButtonStatusNewGame ) {
+      newGame();
+    } else if( !gameButtonStatusNewGame ) {
+        deal();
       }
   }
 
@@ -199,6 +224,11 @@ var game = ( function() {
       activePlayer.determineOptions( users, maxUsers, balance.total );
     } else {
         render.eventLog( activePlayer.status );
+        if ( activePlayer.status === 'Blackjack!' ) {
+          sounds.blackjack();
+        } else if ( activePlayer.status === 'Bust' ) {
+            sounds.bust();
+          }
         setTimeout( function() {
           _nextPlayerPlays();
         }, 1500);
@@ -221,6 +251,7 @@ var game = ( function() {
   }
 
   function info() {
+    sounds.buttonPress();
     render.rules();
   }
 
@@ -252,6 +283,7 @@ var game = ( function() {
   }
 
   function newGame() {
+    sounds.buttonPress();
     var i = 0;
     var obsoleteUser = {};
     var player = {};
@@ -272,11 +304,15 @@ var game = ( function() {
     }
 
     deck.shuffle();
-    buttons.toggleNewGame();
+    buttons.toggleGame();
     activePlayer = players[ 0 ];
     render.activePlayer( activePlayer );
     render.eventLog('Place bet');
     buttons.toggleBet( balance.total );
+  }
+
+  function volume() {
+    sounds.toggleVolume();
   }
 
   function start( setUsers, setMaxUsers, setPacks, setOpeningBalance ) {
@@ -286,12 +322,13 @@ var game = ( function() {
     users = setUsers;
     maxUsers = setMaxUsers;
     createPlayers();
-    buttons.toggleNewGame();
+    buttons.toggleGame();
   }
 
   function userDouble() {
     //User doubles bet and must start with netScore between 9 and 11. User is allowed
     //to take one more card with no risk of going bust.
+    sounds.buttonPress();
     balance.reduce( activePlayer.bet );
     activePlayer.doubleBet( activePlayer );
     activePlayer.processDoubleScore( activePlayer );
@@ -307,6 +344,7 @@ var game = ( function() {
     var oldPlayer = {};
     var newPlayer = {};
 
+    sounds.buttonPress();
     i = players.indexOf( activePlayer );
     oldPlayer = players[ i ];
     transferCard = oldPlayer.removeSplitCard( oldPlayer );
@@ -328,12 +366,14 @@ var game = ( function() {
   }
 
   function userStand() {
+    sounds.buttonPress();
     activePlayer.status = 'Stand';
     buttons.toggleAllOff();
     gameMechanics();
   }
 
   function userTakeCard() {
+    sounds.buttonPress();
     activePlayer.addCard( deck.grabCard(), activePlayer );
     buttons.toggleAllOff();
     gameMechanics();

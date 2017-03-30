@@ -58,6 +58,10 @@ var render = ( function() {
   }
 
   function eventLog( text ) {
+    //Avoid newing 'Deal' text everytime a chip is clicked
+    if( $eventLog.html() === text ) {
+      return;
+    }
     $eventLog.slideUp( 400, function() {
       $eventLog.empty();
       $eventLog.text( text ).hide().slideDown( 400 );
@@ -134,8 +138,8 @@ var render = ( function() {
       of the same value<br>
     <br>
     - Double your bet if you are dealt a total score<br>
-      of 9, 10 or 11. You will receive only one further<br>
-      card<br>
+      of 9, 10 or 11. You will receive only one<br>
+      further card<br>
         </button>`);
     $rulesHTML.appendTo( $el );
   }
@@ -147,6 +151,15 @@ var render = ( function() {
 
   function splitButton() {
     $splitElement.toggle();
+  }
+
+  function volumeMute( status ) {
+    var $soundIcon = $el.find('#sound-src');
+    if( !status ) {
+      $soundIcon.attr('src', './icons/SOUNDMUTE.png');
+    } else {
+        $soundIcon.attr('src', './icons/SOUND.png');
+      }
   }
 
   return {
@@ -166,6 +179,7 @@ var render = ( function() {
     rules: rules,
     score: score,
     splitButton: splitButton,
+    volumeMute: volumeMute,
   }
 
 })();
