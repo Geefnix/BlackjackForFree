@@ -307,7 +307,7 @@ var game = ( function() {
     buttons.toggleGame();
     activePlayer = players[ 0 ];
     render.activePlayer( activePlayer );
-    render.eventLog('Place bet');
+    render.eventLog('Place Bet');
     buttons.toggleBet( balance.total );
   }
 
