@@ -3,11 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "scripts.js",
-  "scripts": {
-    "build": "webpack",
-    "production": "npm run build -- -p",
-    "watch": "npm run build -- --watch"
-  },
+  "scripts": {},
   "author": "",
   "license": "ISC",
   "dependencies": {
