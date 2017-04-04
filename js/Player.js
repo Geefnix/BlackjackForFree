@@ -6,11 +6,11 @@ class Player {
     this.bet = 0;
     this.cards = [];
     this.grossScore = 0;
+    this.inplay = false;
     this.netScore = 0;
     this.status = '';
-    this.result = [];
     this.statusDouble = false;
-    this.inplay = false;
+    this.result = [];
   }
 
   addCard( card, activePlayer ) {
@@ -42,9 +42,9 @@ class Player {
 
     if( ( this.grossScore - this.aces * 10 ) > 21 ) {
       return;
-    } else {
-        this.netScore -= 10;
-      }
+    }
+
+    this.netScore -= 10;
   }
 
   countAces( card ) {
@@ -58,11 +58,11 @@ class Player {
     this.bet = 0;
     this.cards = [];
     this.grossScore = 0;
+    this.inplay = false;
     this.netScore = 0;
     this.status = '';
-    this.result = '';
     this.statusDouble = false;
-    this.inplay = false;
+    this.result = '';
     render.resetPlayer( player );
   }
 }

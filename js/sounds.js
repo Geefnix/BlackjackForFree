@@ -1,27 +1,27 @@
 var $ = require('jquery');
-
 var render = require('./render.js');
 
 var sounds = ( function() {
+  var blackjackSound = document.createElement('audio');
+  var bustSound = document.createElement('audio');
+  var buttonPressSound = document.createElement('audio');
+  var chipsSound = document.createElement('audio');
+  var drawSound = document.createElement('audio');
+  var drawCardSound = document.createElement('audio');
+  var gameOverSound = document.createElement('audio');
+  var loseSound = document.createElement('audio');
+  var winSound = document.createElement('audio');
   var volumeOn = true;
 
-  var blackjackSound = document.createElement('audio');
+  // set attributes
   blackjackSound.setAttribute('src', './sounds/blackjack.wav');
-  var bustSound = document.createElement('audio');
   bustSound.setAttribute('src', './sounds/bust.wav');
-  var buttonPressSound = document.createElement('audio');
   buttonPressSound.setAttribute('src', './sounds/buttonPress.mp3');
-  var chipsSound = document.createElement('audio');
   chipsSound.setAttribute('src', './sounds/chips.wav');
-  var drawSound = document.createElement('audio');
   drawSound.setAttribute('src', './sounds/draw.wav');
-  var drawCardSound = document.createElement('audio');
   drawCardSound.setAttribute('src', './sounds/drawCard.wav');
-  var gameOverSound = document.createElement('audio');
   gameOverSound.setAttribute('src', './sounds/gameOver.wav');
-  var loseSound = document.createElement('audio');
   loseSound.setAttribute('src', './sounds/lose.wav');
-  var winSound = document.createElement('audio');
   winSound.setAttribute('src', './sounds/win.mp3');
 
   function blackjack() {
@@ -88,17 +88,17 @@ var sounds = ( function() {
     }
   }
 
+  function toggleVolume() {
+    volumeOn = !volumeOn;
+    render.volumeMute( volumeOn );
+  }
+
   function win() {
     if( volumeOn ) {
       winSound.pause();
       winSound.currentTime = 0;
       winSound.play();
     }
-  }
-
-  function toggleVolume() {
-    volumeOn = !volumeOn;
-    render.volumeMute( volumeOn );
   }
 
   return {
@@ -110,9 +110,9 @@ var sounds = ( function() {
     drawCard: drawCard,
     gameOver: gameOver,
     lose: lose,
-    win: win,
     toggleVolume: toggleVolume,
-  }
+    win: win
+  };
 
 })();
 

@@ -12,13 +12,13 @@ class Balance {
     }
   }
 
-  reduce( bet ) {
-    this.total -= bet;
+  procesResult( user ) {
+    this.total = this.total + user.bet * user.result[ 1 ];
     render.balance( this.total );
   }
 
-  procesResult( user ) {
-    this.total =  this.total + user.bet * user.result[ 1 ];
+  reduce( bet ) {
+    this.total -= bet;
     render.balance( this.total );
   }
 
