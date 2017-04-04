@@ -1,7 +1,9 @@
+var debug = process.env.NODE_ENV !== "production";
 var webpack = require('webpack');
 
 module.exports = {
   context: __dirname,
+  devtool: debug ? "inline-sourcemap" : false,
   entry: './scripts.js',
   output: {
     path: __dirname + '',
@@ -21,15 +23,7 @@ module.exports = {
     ]
   },
 
-  plugins: []
-
+  plugins: debug ? [] : [
+    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
+  ],
 };
-
-if(process.env.NODE_ENV === 'production') {
-
-  module.exports.plugings.push(
-
-      new webpack.optimize.UglifyJsPlugin()
-
-    );
-}
