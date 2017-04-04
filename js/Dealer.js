@@ -13,15 +13,19 @@ class Dealer extends Player {
   hideCardDealer( status, activePlayer ) {
     if( status ) {
       this.netScore = this.netScore - this.cards[ 1 ].value;
+
       if( this.cards[ 0 ].number === 'ace' && this.cards[ 1 ].number === 'ace' ) {
         this.netScore = this.netScore + 10;
       }
+
       render.score( activePlayer );
     } else if( !status ) {
         this.netScore = this.netScore + this.cards[ 1 ].value;
+
         if( this.cards[ 0 ].number === 'ace' && this.cards[ 1 ].number === 'ace' ) {
           this.netScore = this.netScore - 10;
         }
+
         render.score( activePlayer );
       }
     render.hideCardDealer( status, activePlayer );

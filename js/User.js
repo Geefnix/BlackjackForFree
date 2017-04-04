@@ -1,16 +1,16 @@
+var buttons = require('./buttons.js');
 var Player = require('./Player.js');
 var render = require('./render.js');
-var buttons = require('./buttons.js');
 
 class User extends Player{
   constructor( index, split, oldPlayer ) {
     super();
     render.createUser( index, split, oldPlayer );
-    this.userContainer = '#user' + index;
-    this.scoreContainer = '#scoreUser' + index;
-    this.cardContainer = '#cardsUser' + index;
     this.betContainer = '#betUser' + index;
+    this.cardContainer = '#cardsUser' + index;
+    this.scoreContainer = '#scoreUser' + index;
     this.statusSplit = split;
+    this.userContainer = '#user' + index;
   }
 
   checkDouble() {
@@ -58,8 +58,8 @@ class User extends Player{
   }
 
   removeSplitCard( player ) {
-    var removedCard;
-    removedCard = this.cards[ 1 ];
+    var removedCard = this.cards[ 1 ];
+
     this.grossScore = this.grossScore - removedCard.value;
     this.netScore = this.netScore - removedCard.value;
 

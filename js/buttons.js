@@ -2,19 +2,21 @@ var $ = require('jquery');
 var render = require('./render.js');
 
 var buttons = ( function() {
+  //cache DOM
   var $el = $('.blackjackModule');
-  var $twentyFive = $el.find('#twentyFive');
-  var $fifty = $el.find('#fifty');
-  var $hundred = $el.find('#hundred');
-  var $twoHundred = $el.find('#twoHundred');
-  var $game = $el.find('#game');
-  var $split = $el.find('#split');
   var $double = $el.find('#double');
+  var $fifty = $el.find('#fifty');
+  var $game = $el.find('#game');
+  var $hundred = $el.find('#hundred');
+  var $split = $el.find('#split');
   var $stand = $el.find('#stand');
   var $takeCard = $el.find('#takeCard');
+  var $twentyFive = $el.find('#twentyFive');
+  var $twoHundred = $el.find('#twoHundred');
 
   function toggleAllOff() {
     this.toggleStandAndHit();
+
     if( !$double.is(':disabled') ) {
       this.toggleDouble();
     }
@@ -25,31 +27,26 @@ var buttons = ( function() {
   }
 
   function toggleBet( balance ) {
-    $twentyFive.prop('disabled', true );
-    $fifty.prop('disabled', true );
-    $hundred.prop('disabled', true );
     $twoHundred.prop('disabled', true );
+    $hundred.prop('disabled', true );
+    $fifty.prop('disabled', true );
+    $twentyFive.prop('disabled', true );
 
     if( balance >= 200 ) {
       $twoHundred.prop('disabled', false );
     }
+
     if( balance >= 100 ) {
       $hundred.prop('disabled', false );
     }
+
     if( balance >= 50 ) {
       $fifty.prop('disabled', false );
     }
+
     if( balance >= 25 ) {
       $twentyFive.prop('disabled', false );
     }
-  }
-
-  function toggleDeal( status ) {
-    if( status ) {
-      $deal.prop('disabled', false);
-    } else {
-        $deal.prop('disabled', function( i, v ) { return !v; });
-      }
   }
 
   function toggleDouble() {
@@ -59,7 +56,7 @@ var buttons = ( function() {
 
   function toggleGame( status ) {
     if( status ) {
-      $game.prop('disabled', false);
+      $game.prop('disabled', false );
     } else {
         $game.prop('disabled', function( i, v ) { return !v; });
       }
@@ -81,8 +78,8 @@ var buttons = ( function() {
     toggleDouble: toggleDouble,
     toggleGame: toggleGame,
     toggleSplit: toggleSplit,
-    toggleStandAndHit: toggleStandAndHit,
-  }
+    toggleStandAndHit: toggleStandAndHit
+  };
 
 })();
 

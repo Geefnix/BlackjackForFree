@@ -3,50 +3,50 @@ var Balance = require('./Balance.js');
 var buttons = require('./buttons.js');
 var Dealer = require('./Dealer.js');
 var Deck = require('./Deck.js');
-var User = require('./User.js');
 var render = require('./render.js');
 var sounds = require('./sounds.js');
+var User = require('./User.js');
 
 var game = ( function() {
   var activePlayer = {};
   var balance = {};
   var deck = {};
   var gameButtonStatusNewGame = true;
+  var maxUsers = 0;
   var players = [];
   var users = 0;
-  var maxUsers = 0;
   //cache DOM
   var $el = $('.blackjackModule');
-  var $info = $el.find('#info');
-  var $volume = $el.find('#volume');
-  var $game = $el.find('#game');
-  var $twentyFive = $el.find('#twentyFive');
-  var $fifty = $el.find('#fifty');
-  var $hundred = $el.find('#hundred');
-  var $twoHundred = $el.find('#twoHundred');
-  var $split = $el.find('#split');
   var $double = $el.find('#double');
+  var $fifty = $el.find('#fifty');
+  var $game = $el.find('#game');
+  var $hundred = $el.find('#hundred');
+  var $info = $el.find('#info');
+  var $split = $el.find('#split');
   var $stand = $el.find('#stand');
   var $takeCard = $el.find('#takeCard');
+  var $twentyFive = $el.find('#twentyFive');
+  var $twoHundred = $el.find('#twoHundred');
+  var $volume = $el.find('#volume');
   //Bind events
-  $info.click( info );
-  $volume.click( volume );
-  $game.click( gameButtonSwitch );
-  $twentyFive.click( function() { betPlaced( 25 ); });
-  $fifty.click( function() { betPlaced( 50 ); });
-  $hundred.click( function() { betPlaced( 100 ); });
-  $twoHundred.click( function() { betPlaced( 200 ); });
-  $takeCard.click( userTakeCard );
-  $stand.click( userStand );
-  $split.click( userSplit );
   $double.click( userDouble );
+  $fifty.click( function() { betPlaced( 50 ); });
+  $game.click( gameButtonSwitch );
+  $hundred.click( function() { betPlaced( 100 ); });
+  $info.click( info );
+  $split.click( userSplit );
+  $stand.click( userStand );
+  $takeCard.click( userTakeCard );
+  $twentyFive.click( function() { betPlaced( 25 ); });
+  $twoHundred.click( function() { betPlaced( 200 ); });
+  $volume.click( volume );
 
   function allUsersBustOrBlackjackorNotInplay() {
+    var index = 0;
     var numberOfUsers = players.length - 1;
-    var i = 0;
 
-    for( ; i < numberOfUsers ; i++ ) {
-      if ( players[ i ].status !== 'Bust' && players[ i ].status !== 'Blackjack!' && players[ i ].inplay !== false ) {
+    for( ; index < numberOfUsers ; index++ ) {
+      if ( players[ index ].status !== 'Bust' && players[ index ].status !== 'Blackjack!' && players[ index ].inplay !== false ) {
         return false;
       }
     }
@@ -63,23 +63,23 @@ var game = ( function() {
   }
 
   function createPlayers() {
-    if( users > maxUsers ) {
+    var index = 0;
+
+    if( users > maxUsers || users < 1 ) {
       buttons.toggleGame();
       alert('You\'re a funny guy');
       return;
     }
 
-    var i = 0;
-    for( ; i < users; i++ ) {
-      players.push( new User( i ) );
+    for( ; index < users; index++ ) {
+      players.push( new User( index ) );
     }
     players.push( new Dealer() );
   }
 
   function deal() {
-    sounds.buttonPress();
     var indexUser = players.indexOf( activePlayer ) + 1;
-
+    sounds.buttonPress();
     balance.reduce( activePlayer.bet );
     activePlayer.inplay = true;
 
@@ -96,34 +96,8 @@ var game = ( function() {
         }
   }
 
-  function startDealing() {
-
-    function _dealCard() {
-      setTimeout( function() {
-        sounds.drawCard();
-        activePlayer.addCard( deck.grabCard(), activePlayer );
-
-        if( activePlayer.id === 'Dealer' && activePlayer.cards.length === 2 ) {
-          activePlayer.hideCardDealer( true, activePlayer );
-        }
-
-        activePlayer = selectNextPlayerInPlay( activePlayer );
-        if ( !(activePlayer === players[ 0 ] && activePlayer.cards.length === 2) ) {
-          _dealCard();
-        } else {
-            activePlayer = players[ 0 ];
-            render.activePlayer( activePlayer );
-            render.eventLog('Select Action');
-            gameMechanics();
-          }
-      }, 400);
-    }
-
-    _dealCard();
-  }
-
   function dealersTurn() {
-    activePlayer.hideCardDealer( false, activePlayer )
+    activePlayer.hideCardDealer( false, activePlayer );
 
     if( allUsersBustOrBlackjackorNotInplay() ) {
       determineResults();
@@ -147,14 +121,14 @@ var game = ( function() {
   }
 
   function determineResults() {
-    var numberOfUsers = players.length - 1;
-    var i = 0;
-    var user = {};
     var dealer = activePlayer;
+    var index = 0;
+    var numberOfUsers = players.length - 1;
+    var user = {};
 
     function _userResult() {
       setTimeout( function() {
-        user = players[ i ];
+        user = players[ index ];
 
         if( user.status === 'Blackjack!' && dealer.status === 'Blackjack!' ) {
           sounds.draw();
@@ -181,9 +155,9 @@ var game = ( function() {
 
         render.result( user );
         balance.procesResult( user );
-        i++;
+        index++;
 
-        if( i < numberOfUsers && players[ i ].inplay === true ) {
+        if( index < numberOfUsers && players[ index ].inplay === true ) {
           _userResult();
         } else {
             endGame();
@@ -236,11 +210,14 @@ var game = ( function() {
 
     function _nextPlayerPlays() {
       activePlayer = selectNextPlayer( activePlayer );
+
       if( activePlayer.inplay === false ) {
         numberOfPlayers = players.length - 1;
         activePlayer = players[ numberOfPlayers ];
       }
+
       render.activePlayer( activePlayer );
+
       if( activePlayer.id === 'Dealer' ) {
         dealersTurn();
       } else {
@@ -255,38 +232,12 @@ var game = ( function() {
     render.rules();
   }
 
-  function selectNextPlayer( activePlayer ) {
-    var index = players.indexOf( activePlayer );
-    index += 1;
-    if( index % players.length === 0 ) {
-      index = 0;
-    };
-    return players[ index ];
-  }
-
-  function selectNextPlayerInPlay( activePlayer ) {
-    var numberOfPlayers = players.length;
-    var player = {};
-    var index = 0;
-
-    index = players.indexOf( activePlayer );
-    index += 1;
-    if( index % numberOfPlayers === 0 ) {
-      index = 0;
-    };
-    player = players[ index ];
-    if( player.inplay === true ) {
-      return player;
-    } else {
-        return players[ numberOfPlayers - 1 ];
-      }
-  }
-
   function newGame() {
-    sounds.buttonPress();
-    var i = 0;
+    var index = 0;
     var obsoleteUser = {};
     var player = {};
+
+    sounds.buttonPress();
 
     for( player of players ) {
       player.reset( player );
@@ -295,10 +246,10 @@ var game = ( function() {
 // Users made for splitting need to be elimated before start new game
     for( player of players ) {
       if( player.statusSplit === 'Split' ) {
-        i = players.indexOf( player );
-        obsoleteUser = players[ i ];
+        index = players.indexOf( player );
+        obsoleteUser = players[ index ];
         obsoleteUser.removeHTML( obsoleteUser );
-        players.splice( i, 1 );
+        players.splice( index, 1 );
         users--;
       }
     }
@@ -311,18 +262,69 @@ var game = ( function() {
     buttons.toggleBet( balance.total );
   }
 
-  function volume() {
-    sounds.toggleVolume();
+  function selectNextPlayer( activePlayer ) {
+    var index = players.indexOf( activePlayer );
+
+    index += 1;
+    if( index % players.length === 0 ) {
+      index = 0;
+    }
+
+    return players[ index ];
   }
 
-  function start( setUsers, setMaxUsers, setPacks, setOpeningBalance ) {
+  function selectNextPlayerInPlay( activePlayer ) {
+    var index = players.indexOf( activePlayer );
+    var numberOfPlayers = players.length;
+    var player = {};
+
+    index += 1;
+    if( index % numberOfPlayers === 0 ) {
+      index = 0;
+    }
+    player = players[ index ];
+
+    if( player.inplay === true ) {
+      return player;
+    } else {
+        return players[ numberOfPlayers - 1 ];
+      }
+  }
+
+  function start( setOpeningBalance, setPacks, setUsersmin, setUsersmax ) {
     balance = new Balance( setOpeningBalance );
     deck = new Deck( setPacks );
     deck.create();
-    users = setUsers;
-    maxUsers = setMaxUsers;
+    users = setUsersmin;
+    maxUsers = setUsersmax;
     createPlayers();
     buttons.toggleGame();
+  }
+
+  function startDealing() {
+
+    function _dealCard() {
+      setTimeout( function() {
+        sounds.drawCard();
+        activePlayer.addCard( deck.grabCard(), activePlayer );
+
+        if( activePlayer.id === 'Dealer' && activePlayer.cards.length === 2 ) {
+          activePlayer.hideCardDealer( true, activePlayer );
+        }
+
+        activePlayer = selectNextPlayerInPlay( activePlayer );
+        if ( !(activePlayer === players[ 0 ] && activePlayer.cards.length === 2) ) {
+          _dealCard();
+        } else {
+            activePlayer = players[ 0 ];
+            render.activePlayer( activePlayer );
+            render.eventLog('Select Action');
+            gameMechanics();
+          }
+      }, 400);
+    }
+
+    _dealCard();
   }
 
   function userDouble() {
@@ -339,18 +341,18 @@ var game = ( function() {
   }
 
   function userSplit() {
-    var i = 0;
-    var transferCard = {};
-    var oldPlayer = {};
+    var index = 0;
     var newPlayer = {};
+    var oldPlayer = {};
+    var transferCard = {};
 
     sounds.buttonPress();
-    i = players.indexOf( activePlayer );
-    oldPlayer = players[ i ];
+    index = players.indexOf( activePlayer );
+    oldPlayer = players[ index ];
     transferCard = oldPlayer.removeSplitCard( oldPlayer );
 
-    players.splice( i, 0, new User( users, 'Split', oldPlayer ) );
-    newPlayer = players[ i ];
+    players.splice( index, 0, new User( users, 'Split', oldPlayer ) );
+    newPlayer = players[ index ];
     users++;
     newPlayer.inplay = true;
     newPlayer.setBet( oldPlayer.bet, newPlayer );
@@ -379,9 +381,13 @@ var game = ( function() {
     gameMechanics();
   }
 
-  return {
-    start: start,
+  function volume() {
+    sounds.toggleVolume();
   }
+
+  return {
+    start: start
+  };
 
 })();
 
